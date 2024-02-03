@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -75,7 +76,37 @@ void levelOrderTraversal(node *&root)
         }
     }
 }
-
+bool isBst(node* root, long long mini,long long maxi){
+        if(root == NULL){
+            return true;
+        }
+        
+        if((root->data > mini) && (root->data < maxi)){
+            bool left = isBst(root->left, mini, root->data);
+            bool right = isBst(root->right, root->data, maxi);
+            
+            return left&&right;
+        }
+        else
+            return false;
+        
+    }
+    
+    bool isValidBST(node* root) {
+        if(root == NULL){
+            return true;
+        }
+        
+        if((root->left==NULL && root->right==NULL)){
+             return true;
+        }
+           
+        
+        int mini = INT_MIN;
+        int maxi = INT_MAX;
+        
+        return isBst(root,mini, maxi);
+    }
 void insert_data(node *&root)
 {
     int data;
@@ -99,5 +130,11 @@ int main()
     cout << "Printing the BST:" << endl;
     levelOrderTraversal(root);
 
+    if(isValidBST(root)){
+        cout<<"This is valid BST"<<endl;
+    }
+    else{
+        cout<<"This is not a valid BST"<<endl;
+    }
     return 0;
 }
